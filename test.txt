@@ -1,0 +1,9 @@
+function test (){
+	int a ;
+	write a;
+}
+main() {
+    int abc7 ;
+abc7 = 6;
+}
+

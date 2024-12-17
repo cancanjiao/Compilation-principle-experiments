@@ -1,0 +1,1225 @@
+Terminals unused in grammar
+
+   TYPE
+   AND
+   OR
+   NOT
+   NOTE
+   EQ
+   GE
+   LE
+   COMMA
+   BIG
+   LET
+   DO
+   SWITCH
+   CASE
+   BREAK
+   DEFAULT
+   COMMENT_FIRST
+   COMMENT_LAST
+   LOWER_THAN_ELSE
+
+
+状态 89 conflicts: 1 shift/reduce
+
+
+语法
+
+    0 $accept: Program $end
+
+    1 Program: FunDeclaration MainDeclaration
+
+    2 FunDeclaration: FUNCTION ID LP RP FunctionBody
+
+    3 MainDeclaration: MAIN LP RP FunctionBody
+
+    4 FunctionBody: LC DeclarationList StatementList RC
+
+    5 DeclarationList: DeclarationStat DeclarationList
+    6                | %empty
+
+    7 DeclarationStat: INT ID SEMI
+
+    8 StatementList: Statement StatementList
+    9              | %empty
+
+   10 Statement: IfStat
+   11          | WhileStat
+   12          | ForStat
+   13          | ReadStat
+   14          | WriteStat
+   15          | CompoundStat
+   16          | ExpressionStat
+   17          | CallStat
+
+   18 IfStat: IF LP Expression RP Statement ElseStat
+
+   19 ElseStat: ELSE Statement
+   20         | %empty
+
+   21 WhileStat: WHILE LP BoolExpr RP Statement
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr SEMI Expression RP Statement
+
+   23 WriteStat: WRITE Expression SEMI
+
+   24 ReadStat: READ ID SEMI
+
+   25 CompoundStat: LC StatementList RC
+
+   26 ExpressionStat: Expression SEMI
+   27               | SEMI
+
+   28 CallStat: CALL ID LP RP SEMI
+
+   29 Expression: ID ASSIGNOP BoolExpr
+   30           | BoolExpr
+
+   31 BoolExpr: AdditiveExpr
+   32         | AdditiveExpr RELOP AdditiveExpr
+
+   33 AdditiveExpr: Term AdditiveExprTail
+
+   34 AdditiveExprTail: PLUS Term AdditiveExprTail
+   35                 | MINUS Term AdditiveExprTail
+   36                 | %empty
+
+   37 Term: Factor TermTail
+
+   38 TermTail: STAR Factor TermTail
+   39         | DIV Factor TermTail
+   40         | %empty
+
+   41 Factor: LP AdditiveExpr RP
+   42       | ID
+   43       | NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+FUNCTION (258) 2
+MAIN (259) 3
+RELOP (260) 32
+NUM (261) 43
+ID (262) 2 7 24 28 29 42
+TYPE (263)
+PLUS (264) 34
+MINUS (265) 35
+STAR (266) 38
+DIV (267) 39
+AND (268)
+OR (269)
+NOT (270)
+NOTE (271)
+EQ (272)
+GE (273)
+LE (274)
+ASSIGNOP (275) 29
+LP (276) 2 3 18 21 22 28 41
+RP (277) 2 3 18 21 22 28 41
+SEMI (278) 7 22 23 24 26 27 28
+COMMA (279)
+BIG (280)
+LET (281)
+LC (282) 4 25
+RC (283) 4 25
+IF (284) 18
+ELSE (285) 19
+FOR (286) 22
+WHILE (287) 21
+DO (288)
+INT (289) 7
+WRITE (290) 23
+READ (291) 24
+SWITCH (292)
+CASE (293)
+BREAK (294)
+DEFAULT (295)
+CALL (296) 28
+COMMENT_FIRST (297)
+COMMENT_LAST (298)
+LOWER_THAN_ELSE (299)
+
+
+Nonterminals, with rules where they appear
+
+$accept (45)
+    左： 0
+Program (46)
+    左： 1, 右： 0
+FunDeclaration (47)
+    左： 2, 右： 1
+MainDeclaration (48)
+    左： 3, 右： 1
+FunctionBody (49)
+    左： 4, 右： 2 3
+DeclarationList (50)
+    左： 5 6, 右： 4 5
+DeclarationStat (51)
+    左： 7, 右： 5
+StatementList (52)
+    左： 8 9, 右： 4 8 25
+Statement (53)
+    左： 10 11 12 13 14 15 16 17, 右： 8 18 19 21 22
+IfStat (54)
+    左： 18, 右： 10
+ElseStat (55)
+    左： 19 20, 右： 18
+WhileStat (56)
+    左： 21, 右： 11
+ForStat (57)
+    左： 22, 右： 12
+WriteStat (58)
+    左： 23, 右： 14
+ReadStat (59)
+    左： 24, 右： 13
+CompoundStat (60)
+    左： 25, 右： 15
+ExpressionStat (61)
+    左： 26 27, 右： 16
+CallStat (62)
+    左： 28, 右： 17
+Expression (63)
+    左： 29 30, 右： 18 22 23 26
+BoolExpr (64)
+    左： 31 32, 右： 21 22 29 30
+AdditiveExpr (65)
+    左： 33, 右： 31 32 41
+AdditiveExprTail (66)
+    左： 34 35 36, 右： 33 34 35
+Term (67)
+    左： 37, 右： 33 34 35
+TermTail (68)
+    左： 38 39 40, 右： 37 38 39
+Factor (69)
+    左： 41 42 43, 右： 37 38 39
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    FUNCTION  shift, and go to state 1
+
+    Program         转到状态 2
+    FunDeclaration  转到状态 3
+
+
+State 1
+
+    2 FunDeclaration: FUNCTION . ID LP RP FunctionBody
+
+    ID  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 Program: FunDeclaration . MainDeclaration
+
+    MAIN  shift, and go to state 6
+
+    MainDeclaration  转到状态 7
+
+
+State 4
+
+    2 FunDeclaration: FUNCTION ID . LP RP FunctionBody
+
+    LP  shift, and go to state 8
+
+
+State 5
+
+    0 $accept: Program $end .
+
+    $default  接受
+
+
+State 6
+
+    3 MainDeclaration: MAIN . LP RP FunctionBody
+
+    LP  shift, and go to state 9
+
+
+State 7
+
+    1 Program: FunDeclaration MainDeclaration .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 8
+
+    2 FunDeclaration: FUNCTION ID LP . RP FunctionBody
+
+    RP  shift, and go to state 10
+
+
+State 9
+
+    3 MainDeclaration: MAIN LP . RP FunctionBody
+
+    RP  shift, and go to state 11
+
+
+State 10
+
+    2 FunDeclaration: FUNCTION ID LP RP . FunctionBody
+
+    LC  shift, and go to state 12
+
+    FunctionBody  转到状态 13
+
+
+State 11
+
+    3 MainDeclaration: MAIN LP RP . FunctionBody
+
+    LC  shift, and go to state 12
+
+    FunctionBody  转到状态 14
+
+
+State 12
+
+    4 FunctionBody: LC . DeclarationList StatementList RC
+
+    INT  shift, and go to state 15
+
+    $default  reduce using rule 6 (DeclarationList)
+
+    DeclarationList  转到状态 16
+    DeclarationStat  转到状态 17
+
+
+State 13
+
+    2 FunDeclaration: FUNCTION ID LP RP FunctionBody .
+
+    $default  reduce using rule 2 (FunDeclaration)
+
+
+State 14
+
+    3 MainDeclaration: MAIN LP RP FunctionBody .
+
+    $default  reduce using rule 3 (MainDeclaration)
+
+
+State 15
+
+    7 DeclarationStat: INT . ID SEMI
+
+    ID  shift, and go to state 18
+
+
+State 16
+
+    4 FunctionBody: LC DeclarationList . StatementList RC
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    $default  reduce using rule 9 (StatementList)
+
+    StatementList   转到状态 30
+    Statement       转到状态 31
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 17
+
+    5 DeclarationList: DeclarationStat . DeclarationList
+
+    INT  shift, and go to state 15
+
+    $default  reduce using rule 6 (DeclarationList)
+
+    DeclarationList  转到状态 45
+    DeclarationStat  转到状态 17
+
+
+State 18
+
+    7 DeclarationStat: INT ID . SEMI
+
+    SEMI  shift, and go to state 46
+
+
+State 19
+
+   43 Factor: NUM .
+
+    $default  reduce using rule 43 (Factor)
+
+
+State 20
+
+   29 Expression: ID . ASSIGNOP BoolExpr
+   42 Factor: ID .
+
+    ASSIGNOP  shift, and go to state 47
+
+    $default  reduce using rule 42 (Factor)
+
+
+State 21
+
+   41 Factor: LP . AdditiveExpr RP
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    AdditiveExpr  转到状态 49
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 22
+
+   27 ExpressionStat: SEMI .
+
+    $default  reduce using rule 27 (ExpressionStat)
+
+
+State 23
+
+   25 CompoundStat: LC . StatementList RC
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    $default  reduce using rule 9 (StatementList)
+
+    StatementList   转到状态 50
+    Statement       转到状态 31
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 24
+
+   18 IfStat: IF . LP Expression RP Statement ElseStat
+
+    LP  shift, and go to state 51
+
+
+State 25
+
+   22 ForStat: FOR . LP Expression SEMI BoolExpr SEMI Expression RP Statement
+
+    LP  shift, and go to state 52
+
+
+State 26
+
+   21 WhileStat: WHILE . LP BoolExpr RP Statement
+
+    LP  shift, and go to state 53
+
+
+State 27
+
+   23 WriteStat: WRITE . Expression SEMI
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 20
+    LP   shift, and go to state 21
+
+    Expression    转到状态 54
+    BoolExpr      转到状态 41
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 28
+
+   24 ReadStat: READ . ID SEMI
+
+    ID  shift, and go to state 55
+
+
+State 29
+
+   28 CallStat: CALL . ID LP RP SEMI
+
+    ID  shift, and go to state 56
+
+
+State 30
+
+    4 FunctionBody: LC DeclarationList StatementList . RC
+
+    RC  shift, and go to state 57
+
+
+State 31
+
+    8 StatementList: Statement . StatementList
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    $default  reduce using rule 9 (StatementList)
+
+    StatementList   转到状态 58
+    Statement       转到状态 31
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 32
+
+   10 Statement: IfStat .
+
+    $default  reduce using rule 10 (Statement)
+
+
+State 33
+
+   11 Statement: WhileStat .
+
+    $default  reduce using rule 11 (Statement)
+
+
+State 34
+
+   12 Statement: ForStat .
+
+    $default  reduce using rule 12 (Statement)
+
+
+State 35
+
+   14 Statement: WriteStat .
+
+    $default  reduce using rule 14 (Statement)
+
+
+State 36
+
+   13 Statement: ReadStat .
+
+    $default  reduce using rule 13 (Statement)
+
+
+State 37
+
+   15 Statement: CompoundStat .
+
+    $default  reduce using rule 15 (Statement)
+
+
+State 38
+
+   16 Statement: ExpressionStat .
+
+    $default  reduce using rule 16 (Statement)
+
+
+State 39
+
+   17 Statement: CallStat .
+
+    $default  reduce using rule 17 (Statement)
+
+
+State 40
+
+   26 ExpressionStat: Expression . SEMI
+
+    SEMI  shift, and go to state 59
+
+
+State 41
+
+   30 Expression: BoolExpr .
+
+    $default  reduce using rule 30 (Expression)
+
+
+State 42
+
+   31 BoolExpr: AdditiveExpr .
+   32         | AdditiveExpr . RELOP AdditiveExpr
+
+    RELOP  shift, and go to state 60
+
+    $default  reduce using rule 31 (BoolExpr)
+
+
+State 43
+
+   33 AdditiveExpr: Term . AdditiveExprTail
+
+    PLUS   shift, and go to state 61
+    MINUS  shift, and go to state 62
+
+    $default  reduce using rule 36 (AdditiveExprTail)
+
+    AdditiveExprTail  转到状态 63
+
+
+State 44
+
+   37 Term: Factor . TermTail
+
+    STAR  shift, and go to state 64
+    DIV   shift, and go to state 65
+
+    $default  reduce using rule 40 (TermTail)
+
+    TermTail  转到状态 66
+
+
+State 45
+
+    5 DeclarationList: DeclarationStat DeclarationList .
+
+    $default  reduce using rule 5 (DeclarationList)
+
+
+State 46
+
+    7 DeclarationStat: INT ID SEMI .
+
+    $default  reduce using rule 7 (DeclarationStat)
+
+
+State 47
+
+   29 Expression: ID ASSIGNOP . BoolExpr
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    BoolExpr      转到状态 67
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 48
+
+   42 Factor: ID .
+
+    $default  reduce using rule 42 (Factor)
+
+
+State 49
+
+   41 Factor: LP AdditiveExpr . RP
+
+    RP  shift, and go to state 68
+
+
+State 50
+
+   25 CompoundStat: LC StatementList . RC
+
+    RC  shift, and go to state 69
+
+
+State 51
+
+   18 IfStat: IF LP . Expression RP Statement ElseStat
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 20
+    LP   shift, and go to state 21
+
+    Expression    转到状态 70
+    BoolExpr      转到状态 41
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 52
+
+   22 ForStat: FOR LP . Expression SEMI BoolExpr SEMI Expression RP Statement
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 20
+    LP   shift, and go to state 21
+
+    Expression    转到状态 71
+    BoolExpr      转到状态 41
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 53
+
+   21 WhileStat: WHILE LP . BoolExpr RP Statement
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    BoolExpr      转到状态 72
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 54
+
+   23 WriteStat: WRITE Expression . SEMI
+
+    SEMI  shift, and go to state 73
+
+
+State 55
+
+   24 ReadStat: READ ID . SEMI
+
+    SEMI  shift, and go to state 74
+
+
+State 56
+
+   28 CallStat: CALL ID . LP RP SEMI
+
+    LP  shift, and go to state 75
+
+
+State 57
+
+    4 FunctionBody: LC DeclarationList StatementList RC .
+
+    $default  reduce using rule 4 (FunctionBody)
+
+
+State 58
+
+    8 StatementList: Statement StatementList .
+
+    $default  reduce using rule 8 (StatementList)
+
+
+State 59
+
+   26 ExpressionStat: Expression SEMI .
+
+    $default  reduce using rule 26 (ExpressionStat)
+
+
+State 60
+
+   32 BoolExpr: AdditiveExpr RELOP . AdditiveExpr
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    AdditiveExpr  转到状态 76
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 61
+
+   34 AdditiveExprTail: PLUS . Term AdditiveExprTail
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    Term    转到状态 77
+    Factor  转到状态 44
+
+
+State 62
+
+   35 AdditiveExprTail: MINUS . Term AdditiveExprTail
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    Term    转到状态 78
+    Factor  转到状态 44
+
+
+State 63
+
+   33 AdditiveExpr: Term AdditiveExprTail .
+
+    $default  reduce using rule 33 (AdditiveExpr)
+
+
+State 64
+
+   38 TermTail: STAR . Factor TermTail
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    Factor  转到状态 79
+
+
+State 65
+
+   39 TermTail: DIV . Factor TermTail
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    Factor  转到状态 80
+
+
+State 66
+
+   37 Term: Factor TermTail .
+
+    $default  reduce using rule 37 (Term)
+
+
+State 67
+
+   29 Expression: ID ASSIGNOP BoolExpr .
+
+    $default  reduce using rule 29 (Expression)
+
+
+State 68
+
+   41 Factor: LP AdditiveExpr RP .
+
+    $default  reduce using rule 41 (Factor)
+
+
+State 69
+
+   25 CompoundStat: LC StatementList RC .
+
+    $default  reduce using rule 25 (CompoundStat)
+
+
+State 70
+
+   18 IfStat: IF LP Expression . RP Statement ElseStat
+
+    RP  shift, and go to state 81
+
+
+State 71
+
+   22 ForStat: FOR LP Expression . SEMI BoolExpr SEMI Expression RP Statement
+
+    SEMI  shift, and go to state 82
+
+
+State 72
+
+   21 WhileStat: WHILE LP BoolExpr . RP Statement
+
+    RP  shift, and go to state 83
+
+
+State 73
+
+   23 WriteStat: WRITE Expression SEMI .
+
+    $default  reduce using rule 23 (WriteStat)
+
+
+State 74
+
+   24 ReadStat: READ ID SEMI .
+
+    $default  reduce using rule 24 (ReadStat)
+
+
+State 75
+
+   28 CallStat: CALL ID LP . RP SEMI
+
+    RP  shift, and go to state 84
+
+
+State 76
+
+   32 BoolExpr: AdditiveExpr RELOP AdditiveExpr .
+
+    $default  reduce using rule 32 (BoolExpr)
+
+
+State 77
+
+   34 AdditiveExprTail: PLUS Term . AdditiveExprTail
+
+    PLUS   shift, and go to state 61
+    MINUS  shift, and go to state 62
+
+    $default  reduce using rule 36 (AdditiveExprTail)
+
+    AdditiveExprTail  转到状态 85
+
+
+State 78
+
+   35 AdditiveExprTail: MINUS Term . AdditiveExprTail
+
+    PLUS   shift, and go to state 61
+    MINUS  shift, and go to state 62
+
+    $default  reduce using rule 36 (AdditiveExprTail)
+
+    AdditiveExprTail  转到状态 86
+
+
+State 79
+
+   38 TermTail: STAR Factor . TermTail
+
+    STAR  shift, and go to state 64
+    DIV   shift, and go to state 65
+
+    $default  reduce using rule 40 (TermTail)
+
+    TermTail  转到状态 87
+
+
+State 80
+
+   39 TermTail: DIV Factor . TermTail
+
+    STAR  shift, and go to state 64
+    DIV   shift, and go to state 65
+
+    $default  reduce using rule 40 (TermTail)
+
+    TermTail  转到状态 88
+
+
+State 81
+
+   18 IfStat: IF LP Expression RP . Statement ElseStat
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    Statement       转到状态 89
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 82
+
+   22 ForStat: FOR LP Expression SEMI . BoolExpr SEMI Expression RP Statement
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 48
+    LP   shift, and go to state 21
+
+    BoolExpr      转到状态 90
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 83
+
+   21 WhileStat: WHILE LP BoolExpr RP . Statement
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    Statement       转到状态 91
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 84
+
+   28 CallStat: CALL ID LP RP . SEMI
+
+    SEMI  shift, and go to state 92
+
+
+State 85
+
+   34 AdditiveExprTail: PLUS Term AdditiveExprTail .
+
+    $default  reduce using rule 34 (AdditiveExprTail)
+
+
+State 86
+
+   35 AdditiveExprTail: MINUS Term AdditiveExprTail .
+
+    $default  reduce using rule 35 (AdditiveExprTail)
+
+
+State 87
+
+   38 TermTail: STAR Factor TermTail .
+
+    $default  reduce using rule 38 (TermTail)
+
+
+State 88
+
+   39 TermTail: DIV Factor TermTail .
+
+    $default  reduce using rule 39 (TermTail)
+
+
+State 89
+
+   18 IfStat: IF LP Expression RP Statement . ElseStat
+
+    ELSE  shift, and go to state 93
+
+    ELSE      [reduce using rule 20 (ElseStat)]
+    $default  reduce using rule 20 (ElseStat)
+
+    ElseStat  转到状态 94
+
+
+State 90
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr . SEMI Expression RP Statement
+
+    SEMI  shift, and go to state 95
+
+
+State 91
+
+   21 WhileStat: WHILE LP BoolExpr RP Statement .
+
+    $default  reduce using rule 21 (WhileStat)
+
+
+State 92
+
+   28 CallStat: CALL ID LP RP SEMI .
+
+    $default  reduce using rule 28 (CallStat)
+
+
+State 93
+
+   19 ElseStat: ELSE . Statement
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    Statement       转到状态 96
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 94
+
+   18 IfStat: IF LP Expression RP Statement ElseStat .
+
+    $default  reduce using rule 18 (IfStat)
+
+
+State 95
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr SEMI . Expression RP Statement
+
+    NUM  shift, and go to state 19
+    ID   shift, and go to state 20
+    LP   shift, and go to state 21
+
+    Expression    转到状态 97
+    BoolExpr      转到状态 41
+    AdditiveExpr  转到状态 42
+    Term          转到状态 43
+    Factor        转到状态 44
+
+
+State 96
+
+   19 ElseStat: ELSE Statement .
+
+    $default  reduce using rule 19 (ElseStat)
+
+
+State 97
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr SEMI Expression . RP Statement
+
+    RP  shift, and go to state 98
+
+
+State 98
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr SEMI Expression RP . Statement
+
+    NUM    shift, and go to state 19
+    ID     shift, and go to state 20
+    LP     shift, and go to state 21
+    SEMI   shift, and go to state 22
+    LC     shift, and go to state 23
+    IF     shift, and go to state 24
+    FOR    shift, and go to state 25
+    WHILE  shift, and go to state 26
+    WRITE  shift, and go to state 27
+    READ   shift, and go to state 28
+    CALL   shift, and go to state 29
+
+    Statement       转到状态 99
+    IfStat          转到状态 32
+    WhileStat       转到状态 33
+    ForStat         转到状态 34
+    WriteStat       转到状态 35
+    ReadStat        转到状态 36
+    CompoundStat    转到状态 37
+    ExpressionStat  转到状态 38
+    CallStat        转到状态 39
+    Expression      转到状态 40
+    BoolExpr        转到状态 41
+    AdditiveExpr    转到状态 42
+    Term            转到状态 43
+    Factor          转到状态 44
+
+
+State 99
+
+   22 ForStat: FOR LP Expression SEMI BoolExpr SEMI Expression RP Statement .
+
+    $default  reduce using rule 22 (ForStat)
