@@ -46,7 +46,7 @@ main (int argc, char **argv)
     //  printf ("starting srmantic analysis\n");
      // performSemanticAnalysis (root);
       //printf ("semantic end\n");
-      printTreeInfo (root, 0);
+//      printTreeInfo (root, 0);
 printf("-------------------------\n");
 printf("BR Main\n");
 generate_code(root);
