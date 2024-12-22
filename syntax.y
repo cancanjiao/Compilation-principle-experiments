@@ -52,7 +52,9 @@
 
 // Program Rule: A program is a fun_declaration followed by main_declaration
 Program:            FunDeclaration MainDeclaration
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Program", 2, $1, $2); root = $$;printTreeInfo(root, 0); }
+                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Program", 2, $1, $2); root = $$;
+//printTreeInfo(root, 0);
+ }
     ;
 
 // Function Declaration: function ID ( ) function_body
