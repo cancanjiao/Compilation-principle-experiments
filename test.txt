@@ -3,7 +3,9 @@ function test (){
 	write a;
 }
 main() {
-    int abc7 ;
-abc7 = 6;
+    int a ;
+	int a;
+a = 5;
+	b = 6;
 }
 

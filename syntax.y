@@ -2,6 +2,8 @@
     #include<stdio.h>
     #include"node.h"
     #include"lex.yy.c"
+    #include"symbol.h"
+	
     extern int synError;
     pNode root;
     #define YYERROR_VERBOSE 1
@@ -12,8 +14,8 @@
     void  yyerror(const char *msg);
 %}
 
-// types
 
+// types
 %union{
     pNode node; 
 }
@@ -52,7 +54,9 @@
 
 // Program Rule: A program is a fun_declaration followed by main_declaration
 Program:            FunDeclaration MainDeclaration
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Program", 2, $1, $2); root = $$;printTreeInfo(root, 0); }
+                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Program", 2, $1, $2); root = $$;
+//printTreeInfo(root, 0); 
+}
     ;
 
 // Function Declaration: function ID ( ) function_body
@@ -78,7 +82,7 @@ DeclarationList:    DeclarationStat DeclarationList
 
 // Declaration Stat: int ID ;
 DeclarationStat:    INT ID SEMI
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "DeclarationStat", 3, $1, $2,$3); }
+                  { $$ = newNode(@$.first_line, NODE_DECLARATION, "DeclarationStat", 3, $1, $2,$3); }
     ;
 
 // Statement List: { statement_list } | ε
@@ -156,7 +160,7 @@ CallStat:          CALL ID LP RP SEMI
 
 // Expression: ID = bool_expr | bool_expr
 Expression:        ID ASSIGNOP BoolExpr
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Expression", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NODE_ASSIGNMENT, "Expression", 3, $1, $2, $3); }
     |               BoolExpr
                   { $$ = newNode(@$.first_line, NOT_A_TOKEN, "Expression", 1, $1); }
     ;
