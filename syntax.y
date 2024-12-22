@@ -61,12 +61,12 @@ Program:            FunDeclaration MainDeclaration
 
 // Function Declaration: function ID ( ) function_body
 FunDeclaration:     FUNCTION ID LP RP FunctionBody
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "FunDeclaration", 4, $2, $3, $4, $5); }
+                  { $$ = newNode(@$.first_line, NODE_FUNCTION, "FunDeclaration", 4, $2, $3, $4, $5); }
     ;
 
 // Main Declaration: main ( ) function_body
 MainDeclaration:    MAIN LP RP FunctionBody
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "MainDeclaration", 3, $2, $3, $4); }
+                  { $$ = newNode(@$.first_line, NODE_MAIN, "MainDeclaration", 3, $2, $3, $4); }
     ;
 
 // Function Body: { declaration_list statement_list }
@@ -138,7 +138,7 @@ WriteStat:         WRITE Expression SEMI
 
 // Read Statement: read ID ;
 ReadStat:          READ ID SEMI
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "ReadStat", 3, $1, $2,$3); }
+                  { $$ = newNode(@$.first_line, NODE_USE, "ReadStat", 3, $1, $2,$3); }
     ;
 
 // Compound Statement: { statement_list }
@@ -155,7 +155,7 @@ ExpressionStat:    Expression SEMI
 
 // Call Statement: call ID ( );
 CallStat:          CALL ID LP RP SEMI
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "CallStat", 5, $1, $2, $3, $4,$5); }
+                  { $$ = newNode(@$.first_line, NODE_USE, "CallStat", 5, $1, $2, $3, $4,$5); }
     ;
 
 // Expression: ID = bool_expr | bool_expr

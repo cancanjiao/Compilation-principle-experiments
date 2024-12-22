@@ -43,9 +43,10 @@ main (int argc, char **argv)
     {
       printf ("starting srmantic analysis\n");
       performSemanticAnalysis (root);
-      printf ("semantic start\n");
-      printTreeInfo (root, 0);
+      printf ("semantic end\n");
+    //  printTreeInfo (root, 0);
     }
+  
   delNode (root);		//清理语法树
   return 0;
 }

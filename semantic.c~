@@ -5,7 +5,6 @@
 // 全局变量，指向当前的作用域
 SymbolTable *currentScope = NULL;
 
-
 void
 enterScope ()
 {
@@ -39,24 +38,24 @@ void
 checkDeclaration (pNode node)
 {
   // 检查节点和子节点是否有效
-  if (node->child->next == NULL)
+  if (node == NULL || node->child == NULL || node->child->val == NULL)
     {
       printf ("错误：checkDeclaration 中的节点无效\n");
       return;
     }
 
   // 调试输出，检查当前声明的变量
-  printf ("正在检查声明的变量：%s\n", node->child->next->val);
+  printf ("正在检查声明的变量：%s\n", node->child->val);
 
   // 如果符号表中没有该变量，则添加它
-  if (findSymbol (currentScope, node->child->next->val) == NULL)
+  if (findSymbol (currentScope, node->child->val) == NULL)
     {
-      addSymbol (currentScope, node->child->next->val, TYPE_INT);
+      addSymbol (currentScope, node->child->val, TYPE_INT);
     }
   else
     {
-      printf ("错误：第%d行的变量 '%s'已经 声明\n",
-	      node->child->next->lineNo, node->child->next->val);
+      printf ("错误：变量 '%s' 已在第 %d 行声明\n",
+	      node->child->val, node->lineNo);
     }
 }
 
@@ -64,32 +63,21 @@ void
 checkAssignment (pNode node)
 {
   // 检查节点和子节点是否有效
-  if (node->child == NULL)
+  if (node == NULL || node->child == NULL || node->child->val == NULL)
     {
       printf ("错误：checkAssignment 中的节点无效\n");
       return;
     }
 
   // 调试输出，检查当前赋值的变量
-  printf ("正在检查赋值或使用的变量：%s\n", node->child->val);
+  printf ("正在检查赋值的变量：%s\n", node->child->val);
 
   // 如果符号表中没有该变量，说明该变量未声明
   if (findSymbol (currentScope, node->child->val) == NULL)
     {
-      printf ("错误：变量 '%s'未被声明   第 %d 行\n",
-	      node->child->val, node->child->lineNo);
+      printf ("错误：变量 '%s' 未在第 %d 行声明\n",
+	      node->child->val, node->lineNo);
     }
-}
-void checkUSE(pNode node){
-	if(node->child->next==NULL){
-		printf("error checkuse is null");
-		return;
-	}
-
-	printf("checkuse var is :%s\n",node->child->next->val);
-	if(findSymbol(currentScope,node->child->next->val) == NULL){
-		printf("error : the id %s is not decline in line %d\n",node->child->child->next->val,node->next->lineNo);
-	}
 }
 
 void
@@ -101,27 +89,20 @@ performSemanticAnalysis (pNode root)
       return;
     }
 
-       // printf(": %s", root->val);
   // 调试输出，检查当前分析的节点类型和行号
-//  printf ("正在进行语义分析，节点类型：%d,所在行：%d\n",
-	  //root->type, root->lineNo);
+  printf ("正在进行语义分析，节点类型：%d，所在行：%d\n",
+	  root->type, root->lineNo);
 
   switch (root->type)
     {
-	    case NODE_FUNCTION:
-		    enterScope();
-		    break;
-	    case NODE_MAIN:
-		    enterScope();
-		    break;
     case NODE_DECLARATION:
       checkDeclaration (root);
       break;
     case NODE_ASSIGNMENT:
       checkAssignment (root);
       break;
-    case NODE_USE:
-      checkUSE(root);
+    case NODE_EXPRESSION:
+      // 表达式的语义分析（目前未实现）
       break;
     default:
       //printf ("语义分析：未知的节点类型，行号：%d\n", root->lineNo);
@@ -133,3 +114,27 @@ performSemanticAnalysis (pNode root)
   performSemanticAnalysis (root->next);
 }
 
+																										   // 修改后的 findSymbol，加入了空指针检查
+Symbol *
+findSymbol (SymbolTable * table, char *name)
+{
+  // 检查符号表和名称是否为 NULL
+  if (table == NULL || name == NULL)
+    {
+      printf ("错误：传递给 findSymbol 的指针为 NULL\n");
+      return NULL;
+    }
+
+  // 计算哈希值，找到对应的符号链表
+  unsigned idx = hash (name);
+  Symbol *symbol = table->symbols[idx];
+  while (symbol)
+    {
+      if (strcmp (symbol->name, name) == 0)
+	{
+	  return symbol;
+	}
+      symbol = symbol->next;
+    }
+  return NULL;
+}

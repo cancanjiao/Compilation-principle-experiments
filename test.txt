@@ -1,6 +1,6 @@
 function test (){
 	int a ;
-	write a;
+	read a;
 }
 main() {
     int a ;

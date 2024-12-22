@@ -1441,13 +1441,13 @@ yyreduce:
 
   case 3:
 #line 64 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "FunDeclaration", 4, (yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_FUNCTION, "FunDeclaration", 4, (yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
 #line 1446 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 69 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "MainDeclaration", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_MAIN, "MainDeclaration", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
 #line 1452 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1573,7 +1573,7 @@ yyreduce:
 
   case 25:
 #line 141 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "ReadStat", 3, (yyvsp[-2].node), (yyvsp[-1].node),(yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_USE, "ReadStat", 3, (yyvsp[-2].node), (yyvsp[-1].node),(yyvsp[0].node)); }
 #line 1578 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1597,7 +1597,7 @@ yyreduce:
 
   case 29:
 #line 158 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "CallStat", 5, (yyvsp[-4].node), (yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node),(yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_USE, "CallStat", 5, (yyvsp[-4].node), (yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node),(yyvsp[0].node)); }
 #line 1602 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
