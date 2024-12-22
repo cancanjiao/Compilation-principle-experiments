@@ -1615,13 +1615,13 @@ yyreduce:
 
   case 32:
 #line 170 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "BoolExpr", 1, (yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_BOOL_EXPR, "BoolExpr", 1, (yyvsp[0].node)); }
 #line 1620 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 172 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "BoolExpr", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_BOOL_EXPR, "BoolExpr", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
 #line 1626 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1633,7 +1633,7 @@ yyreduce:
 
   case 35:
 #line 181 "./syntax.y" /* yacc.c:1646  */
-    { (yyval.node) = newNode((yyloc).first_line, NOT_A_TOKEN, "AdditiveExprTail", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+    { (yyval.node) = newNode((yyloc).first_line, NODE_ADD, "AdditiveExprTail", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
 #line 1638 "./syntax.tab.c" /* yacc.c:1646  */
     break;
 

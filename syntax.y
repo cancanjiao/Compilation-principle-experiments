@@ -167,9 +167,9 @@ Expression:        ID ASSIGNOP BoolExpr
 
 // Bool Expression: additive_expr | additive_expr ( > | < | >= | <= | == | != ) additive_expr
 BoolExpr:          AdditiveExpr
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "BoolExpr", 1, $1); }
+                  { $$ = newNode(@$.first_line, NODE_BOOL_EXPR, "BoolExpr", 1, $1); }
     |               AdditiveExpr RELOP AdditiveExpr
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "BoolExpr", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NODE_BOOL_EXPR, "BoolExpr", 3, $1, $2, $3); }
     ;
 
 // Additive Expression: term { (+ | -) term }
@@ -178,7 +178,7 @@ AdditiveExpr:      Term AdditiveExprTail
     ;
 
 AdditiveExprTail:   PLUS Term AdditiveExprTail
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "AdditiveExprTail", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NODE_ADD, "AdditiveExprTail", 3, $1, $2, $3); }
     |               MINUS Term AdditiveExprTail
                   { $$ = newNode(@$.first_line, NOT_A_TOKEN, "AdditiveExprTail", 3, $1, $2, $3); }
     |               { $$ = NULL; }

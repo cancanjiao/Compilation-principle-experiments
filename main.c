@@ -1,6 +1,8 @@
 #include "node.h"
 #include "syntax.tab.h"
+#include <stdio.h>
 
+extern void generate_code(pNode root);
 extern void performSemanticAnalysis (Node * root);
 
 extern pNode root;
@@ -41,10 +43,13 @@ main (int argc, char **argv)
 
   if (!lexError && !synError)
     {
-      printf ("starting srmantic analysis\n");
-      performSemanticAnalysis (root);
-      printf ("semantic end\n");
-    //  printTreeInfo (root, 0);
+    //  printf ("starting srmantic analysis\n");
+     // performSemanticAnalysis (root);
+      //printf ("semantic end\n");
+      printTreeInfo (root, 0);
+printf("-------------------------\n");
+printf("BR Main\n");
+generate_code(root);
     }
   
   delNode (root);		//清理语法树
