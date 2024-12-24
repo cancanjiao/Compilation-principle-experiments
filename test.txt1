@@ -1,0 +1,9 @@
+function test (){
+	int a ;
+	read a;
+}
+main() {
+    int a ;
+a = 5;
+}
+
