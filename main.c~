@@ -1,10 +1,9 @@
 #include "node.h"
 #include "syntax.tab.h"
 #include <stdio.h>
-char **args;
+
 extern void generate_code (pNode root);
 extern void performSemanticAnalysis (Node * root);
-extern insert_Instruction(char op[10], int operand); 
 extern void print_code ();
 extern pNode root;
 
@@ -18,7 +17,6 @@ unsigned synError = FALSE;
 int
 main (int argc, char **argv)
 {
-	args = argv;
   printf ("main start\n");
   if (argc <= 1)
     {
@@ -33,7 +31,6 @@ main (int argc, char **argv)
       perror (argv[1]);
       return 1;
     }
-
   printf ("yyrestart\n");
   yyrestart (f);
   printf ("syntax is start\n");
@@ -42,7 +39,6 @@ main (int argc, char **argv)
   if (root == NULL)
     {
       printf ("error root is null\n");
-    //  return ;
     }
 
   if (!lexError && !synError)
@@ -50,9 +46,8 @@ main (int argc, char **argv)
       //  printf ("starting srmantic analysis\n");
       // performSemanticAnalysis (root);
       //printf ("semantic end\n");
-	//      printTreeInfo (root, 0);
+//      printTreeInfo (root, 0);
       printf ("-------------------------\n");
-      insert_Instruction("BR",0); 
       generate_code (root);
       printf_code ();
     }
@@ -88,19 +83,14 @@ main (int argc, char **argv)
 void
 printf_code ()
 {
-	char * filename;
-  if (strcmp(args[1],"test.txt") == 0){
-	filename = "code.txt";
-  }else if(strcmp(args[1],"test1.txt") == 0){
-	  filename = "code1.txt";
-  }else{
-	    print_code();
-   printf("RETURN 0\n");
-    return ;
+  FILE *file = fopen ("code.txt", "r");	// 以只读方式打开文件
+  if (file == NULL)
+    {
+      // 如果文件打开失败，输出错误信息并退出
+      perror ("Error opening file");
+      exit (1);
     }
 
-
-  FILE *file = fopen (filename, "r");	// 以只读方式打开文件
   char ch;
   // 逐字符读取文件内容并输出到标准输出（通常是终端）
   while ((ch = fgetc (file)) != EOF)

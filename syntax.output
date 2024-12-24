@@ -62,7 +62,7 @@ Terminals unused in grammar
 
    22 ForStat: FOR LP Expression SEMI BoolExpr SEMI Expression RP Statement
 
-   23 WriteStat: WRITE Expression SEMI
+   23 WriteStat: WRITE ID SEMI
 
    24 ReadStat: READ ID SEMI
 
@@ -104,7 +104,7 @@ FUNCTION (258) 2
 MAIN (259) 3
 RELOP (260) 32
 NUM (261) 43
-ID (262) 2 7 24 28 29 42
+ID (262) 2 7 23 24 28 29 42
 TYPE (263)
 PLUS (264) 34
 MINUS (265) 35
@@ -183,7 +183,7 @@ ExpressionStat (61)
 CallStat (62)
     左： 28, 右： 17
 Expression (63)
-    左： 29 30, 右： 18 22 23 26
+    左： 29 30, 右： 18 22 26
 BoolExpr (64)
     左： 31 32, 右： 21 22 29 30
 AdditiveExpr (65)
@@ -473,17 +473,9 @@ State 26
 
 State 27
 
-   23 WriteStat: WRITE . Expression SEMI
+   23 WriteStat: WRITE . ID SEMI
 
-    NUM  shift, and go to state 19
-    ID   shift, and go to state 20
-    LP   shift, and go to state 21
-
-    Expression    转到状态 54
-    BoolExpr      转到状态 41
-    AdditiveExpr  转到状态 42
-    Term          转到状态 43
-    Factor        转到状态 44
+    ID  shift, and go to state 54
 
 
 State 28
@@ -741,7 +733,7 @@ State 53
 
 State 54
 
-   23 WriteStat: WRITE Expression . SEMI
+   23 WriteStat: WRITE ID . SEMI
 
     SEMI  shift, and go to state 73
 
@@ -898,7 +890,7 @@ State 72
 
 State 73
 
-   23 WriteStat: WRITE Expression SEMI .
+   23 WriteStat: WRITE ID SEMI .
 
     $default  reduce using rule 23 (WriteStat)
 

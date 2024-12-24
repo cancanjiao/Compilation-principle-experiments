@@ -132,13 +132,13 @@ ForStat:           FOR LP Expression SEMI BoolExpr SEMI Expression RP Statement
     ;
 
 // Write Statement: write expression ;
-WriteStat:         WRITE Expression SEMI
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "WriteStat",3, $1, $2,$3); }
+WriteStat:         WRITE ID SEMI
+                  { $$ = newNode(@$.first_line, NODE_WRITE, "WriteStat",3, $1, $2,$3); }
     ;
 
 // Read Statement: read ID ;
 ReadStat:          READ ID SEMI
-                  { $$ = newNode(@$.first_line, NODE_USE, "ReadStat", 3, $1, $2,$3); }
+                  { $$ = newNode(@$.first_line, NODE_READ, "ReadStat", 3, $1, $2,$3); }
     ;
 
 // Compound Statement: { statement_list }
@@ -155,7 +155,7 @@ ExpressionStat:    Expression SEMI
 
 // Call Statement: call ID ( );
 CallStat:          CALL ID LP RP SEMI
-                  { $$ = newNode(@$.first_line, NODE_USE, "CallStat", 5, $1, $2, $3, $4,$5); }
+                  { $$ = newNode(@$.first_line, NODE_CALL, "CallStat", 5, $1, $2, $3, $4,$5); }
     ;
 
 // Expression: ID = bool_expr | bool_expr
@@ -167,9 +167,9 @@ Expression:        ID ASSIGNOP BoolExpr
 
 // Bool Expression: additive_expr | additive_expr ( > | < | >= | <= | == | != ) additive_expr
 BoolExpr:          AdditiveExpr
-                  { $$ = newNode(@$.first_line, NODE_BOOL_EXPR, "BoolExpr", 1, $1); }
+                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "BoolExpr", 1, $1); }
     |               AdditiveExpr RELOP AdditiveExpr
-                  { $$ = newNode(@$.first_line, NODE_BOOL_EXPR, "BoolExpr", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "BoolExpr", 3, $1, $2, $3); }
     ;
 
 // Additive Expression: term { (+ | -) term }
@@ -178,9 +178,9 @@ AdditiveExpr:      Term AdditiveExprTail
     ;
 
 AdditiveExprTail:   PLUS Term AdditiveExprTail
-                  { $$ = newNode(@$.first_line, NODE_ADD, "AdditiveExprTail", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NODE_PLUS, "AdditiveExprTail", 3, $1, $2, $3); }
     |               MINUS Term AdditiveExprTail
-                  { $$ = newNode(@$.first_line, NOT_A_TOKEN, "AdditiveExprTail", 3, $1, $2, $3); }
+                  { $$ = newNode(@$.first_line, NODE_MINUS, "AdditiveExprTail", 3, $1, $2, $3); }
     |               { $$ = NULL; }
     ;
 
@@ -207,6 +207,7 @@ Factor:            LP AdditiveExpr RP
 %%
 
 void yyerror(const char* msg){
+	synError = TRUE;
     fprintf(stderr, "Error type B at line %d: %s.\n", yylineno, msg);
 }
 
