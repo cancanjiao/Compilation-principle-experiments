@@ -48,7 +48,7 @@ main (int argc, char **argv)
       //printf ("semantic end\n");
 //      printTreeInfo (root, 0);
 printf("-------------------------\n");
-printf("BR Main\n");
+printf("BR 4 \n");
 generate_code(root);
     }
   

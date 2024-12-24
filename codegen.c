@@ -1,6 +1,7 @@
 #include "node.h"
 #include <stdio.h>
 #include <string.h>
+#include "symbol.h"
 
 // 声明帮助函数
 void generate_code(pNode root);
@@ -11,6 +12,11 @@ void generate_assignment(pNode assign_stmt);
 void generate_io_statements(pNode io_stmt);
 void generate_additive_expression(pNode add_expr);
 void generate_boolean_expression(pNode bool_expr);
+
+
+int num = 2;
+int num1 = 3;
+int num2 = 2;
 
 // 生成目标代码的主函数
 void generate_code(pNode root) {
@@ -52,21 +58,21 @@ void generate_code(pNode root) {
 
 // 生成函数声明的目标代码
 void generate_function_declaration(pNode func_decl) {
-    printf("ENTER %s\n", func_decl->name);  // 函数入口
+    printf("ENTER %d\n",num1);  // 函数入口
     generate_code(func_decl->child);        // 递归生成函数体的代码
     printf("RETURN 0\n");                     // 函数返回
 }
 
 // 生成主函数的目标代码
 void generate_main_declaration(pNode main_decl) {
-    printf("ENTER main\n");
+    printf("ENTER %d\n",num1);
     generate_code(main_decl->child);        // 递归生成主函数体的代码
     printf("RETURN 0\n");                     // 主函数返回
 }
 
 // 生成变量声明的目标代码
 void generate_variable_declaration(pNode var_decl) {
-    printf("DECLARE %s\n", var_decl->name);  // 变量声明
+   // printf("DECLARE %s\n", var_decl->name);  // 变量声明
 }
 
 // 生成赋值语句的目标代码
@@ -96,7 +102,7 @@ void generate_additive_expression(pNode add_expr) {
 
     generate_code(left);           // 生成左操作数的代码
     generate_code(right);          // 生成右操作数的代码
-    printf("ADD 0\n");               // 执行加法操作
+    printf("LOAD %d\n",num2);               // 执行加法操作
 }
 
 // 生成布尔表达式的目标代码
@@ -124,7 +130,7 @@ void generate_boolean_expression(pNode bool_expr) {
         }
     } else {
         // 如果是单一加法表达式
-        generate_additive_expression(bool_expr->child);
+       // generate_additive_expression(bool_expr->child);
     }
 }
 
