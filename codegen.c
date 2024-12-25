@@ -13,7 +13,8 @@ typedef struct Code {
 
 Code codeList[100];
 int codeIndex = 0;
-
+int flag = 0;
+int flagaddress;
  SymbolTable * currentScope = NULL;
 
 // 插入中间代码指令
@@ -62,7 +63,8 @@ void generate_main_declaration(pNode main_decl) {
 void generate_variable_declaration(pNode var_decl) {
     int address = currentScope->symbolnum + 2;
     VarType type =  TYPE_INT;
-    addSymbol(currentScope, var_decl->child->val, address, type);  // 使用正确的参数调用 addSymbol
+  //  printf(" %s %d \n",var_decl->child->next->val,address);
+    addSymbol(currentScope, var_decl->child->next->val, address, type);  // 使用正确的参数调用 addSymbol
    // insert_Instruction("STO", address);
     currentScope->symbolnum++;
     //printSymbolTable(currentScope);
@@ -71,12 +73,16 @@ void generate_variable_declaration(pNode var_decl) {
 // 生成赋值语句的中间代码
 void generate_assignment(pNode assign_stmt) {
     int address = getAddress(currentScope, assign_stmt->child->val);
+//    printf("%s\n",assign_stmt->child->val);
     generate_expression(assign_stmt->child->next);  // 右侧的表达式
-    insert_Instruction("STO", address);
+   flag = 1; 
+   flagaddress = address;
+    //insert_Instruction("STO", address);
 }
 
 // 生成读取语句的中间代码
 void generate_read_statements(pNode io_stmt) {
+ //   printf("%s\n",io_stmt->child->next->val);
     int address = getAddress(currentScope, io_stmt->child->next->val);
     insert_Instruction("IN", 0);
     insert_Instruction("STO", address);
@@ -84,6 +90,7 @@ void generate_read_statements(pNode io_stmt) {
 
 // 生成输出语句的中间代码
 void generate_write_statements(pNode io_stmt) {
+   // printf("%s\n",io_stmt->child->next->val);
     int address = getAddress(currentScope, io_stmt->child->next->val);
     insert_Instruction("LOAD", address);
     insert_Instruction("OUT", 0);
@@ -121,6 +128,7 @@ void generate_expression(pNode expr) {
 void generate_code(pNode root) {
     if (root == NULL) return;
 
+	    int n;
 //    printSymbolTable(currentScope);
     
     switch (root->type) {
@@ -143,7 +151,9 @@ void generate_code(pNode root) {
             generate_write_statements(root);
             break;
 	case TOKEN_NUM: 
-        	insert_Instruction("LOADI", root->val);  // 加载常量到栈
+	   n  = atoi(root->val );
+        	insert_Instruction("LOADI",n);  // 加载常量到栈
+    	if(flag == 1)insert_Instruction("STO", flagaddress);
     		break; 
         default:
             break;

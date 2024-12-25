@@ -54,7 +54,8 @@ main (int argc, char **argv)
       printf ("-------------------------\n");
       insert_Instruction("BR",0); 
       generate_code (root);
-      printf_code ();
+      print_code ();
+      printf("RETURN 0\n");
     }
 
   delNode (root);		//清理语法树
@@ -64,49 +65,3 @@ main (int argc, char **argv)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void
-printf_code ()
-{
-	char * filename;
-  if (strcmp(args[1],"test.txt") == 0){
-	filename = "code.txt";
-  }else if(strcmp(args[1],"test1.txt") == 0){
-	  filename = "code1.txt";
-  }else{
-	    print_code();
-   printf("RETURN 0\n");
-    return ;
-    }
-
-
-  FILE *file = fopen (filename, "r");	// 以只读方式打开文件
-  char ch;
-  // 逐字符读取文件内容并输出到标准输出（通常是终端）
-  while ((ch = fgetc (file)) != EOF)
-    {
-      putchar (ch);
-    }
-
-  fclose (file);		// 关闭文件
-}

@@ -5,6 +5,14 @@
 
 int symbolNum = 0;
 
+char *strdup(const char *str) {
+	    size_t len = strlen(str) + 1;
+	        char *copy = malloc(len);
+		    if (copy) {
+			            memcpy(copy, str, len);
+				        }
+		        return copy;
+}
 
 
 unsigned hash(char *str)
@@ -25,7 +33,7 @@ SymbolTable *createSymbolTable()
         table->symbols[i] = NULL;
     }
     table->symbolnum = 0;
-    printf("cteate symboltable success!\n");
+ //   printf("cteate symboltable success!\n");
     return table;
 }
 
@@ -55,7 +63,7 @@ void addSymbol(SymbolTable *table, char *name, int symboladdress, VarType type)
     symbol->next = table->symbols[idx];
     table->symbols[idx] = symbol;
     table->symbolnum++;
-    printf("add symbol %s success!\n",name);
+    //printf("add symbol %s success! %d\n",name,symbol->address);
 }
 
 Symbol *findSymbol(SymbolTable *table, char *name)
@@ -66,7 +74,7 @@ Symbol *findSymbol(SymbolTable *table, char *name)
     {
         if (strcmp(symbol->name, name) == 0)
         {
-    printf("find symbol %s %s success!\n",symbol->name,name);
+    //printf("find symbol %s %s success!\n",symbol->name,name);
             return symbol;
         }
         symbol = symbol->next;
@@ -80,7 +88,7 @@ int getAddress(SymbolTable *table, char *name)
     //printf("%s",name);
     if (symbol)
     {
-	    printf("get address success %s %d\n",symbol->name,symbol->address);
+//	    printf("get address success %s %d\n",symbol->name,symbol->address);
         return symbol->address;
     }
     return -1; // 代表未找到
