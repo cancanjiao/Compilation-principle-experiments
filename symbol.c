@@ -25,6 +25,7 @@ SymbolTable *createSymbolTable()
         table->symbols[i] = NULL;
     }
     table->symbolnum = 0;
+    printf("cteate symboltable success!\n");
     return table;
 }
 
@@ -54,6 +55,7 @@ void addSymbol(SymbolTable *table, char *name, int symboladdress, VarType type)
     symbol->next = table->symbols[idx];
     table->symbols[idx] = symbol;
     table->symbolnum++;
+    printf("add symbol %s success!\n",name);
 }
 
 Symbol *findSymbol(SymbolTable *table, char *name)
@@ -64,6 +66,7 @@ Symbol *findSymbol(SymbolTable *table, char *name)
     {
         if (strcmp(symbol->name, name) == 0)
         {
+    printf("find symbol %s %s success!\n",symbol->name,name);
             return symbol;
         }
         symbol = symbol->next;
@@ -77,6 +80,7 @@ int getAddress(SymbolTable *table, char *name)
     //printf("%s",name);
     if (symbol)
     {
+	    printf("get address success %s %d\n",symbol->name,symbol->address);
         return symbol->address;
     }
     return -1; // 代表未找到
